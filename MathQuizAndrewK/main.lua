@@ -50,12 +50,12 @@ local winner
 ------------------------------------------------------------------------------------
 
 --Setting a variable to an mp3 file
-local heySoundSound = audio.loadSound("Sound/hey.mp3")
+local heySoundSound = audio.loadSound("Sounds/hey.mp3")
 local heySoundSoundChannel
 
-local wrongSoundSoundSound = audio.loadSound("Sound/wrongSound.mp3")
+local wrongSoundSoundSound = audio.loadSound("Sounds/wrongSound.mp3")
 
-local creepySoundSoundSound = audio.loadSound("Sound/creepy.mp3")
+local creepySoundSoundSound = audio.loadSound("Sounds/creepy.mp3")
 local creepySoundChannel = audio.play(creepySound)
 
 ------------------------------------------------------------------------------------
@@ -84,7 +84,6 @@ local function UpdateHeart()
       heart3.isVisible = false
       gameover.isVisible = true
       emoji.isVisible = true
-      buddySoundChannel = audio.play(buddySound)
       numericField.isVisible = false
       pointsTextObject.isVisible = false
       questionObject.isVisible = false
@@ -124,6 +123,7 @@ end
 local function Starttimer()
    -- creat a countdown timer that loops infinitely
    countDownTimer  = timer.performWithDelay( 1000, UpdateTime, 0)
+   creepySoundSoundSoundChannel = audio.play(creepySoundSoundSound)
 end  
 
 
