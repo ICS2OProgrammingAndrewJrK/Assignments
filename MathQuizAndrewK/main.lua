@@ -53,7 +53,7 @@ local winner
 local heySoundSound = audio.loadSound("Sounds/hey.mp3")
 local heySoundSoundChannel
 
-local wrongSoundSoundSound = audio.loadSound("Sounds/wrongSound.mp3")
+local pipSoundSoundSound = audio.loadSound("Sounds/pip.mp3")
 
 local creepySoundSoundSound = audio.loadSound("Sounds/creepy.mp3")
 local creepySoundChannel = audio.play(creepySound)
@@ -64,30 +64,31 @@ local creepySoundChannel = audio.play(creepySound)
 
 local function UpdateHeart()
     if(lives == 3) then
-      heart1.isVisible = true
-      heart2.isVisible = true
-      heart3.isVisible = true
+      	heart1.isVisible = true
+      	heart2.isVisible = true
+      	heart3.isVisible = true
   
-     elseif (lives == 2) then
-      heart1.isVisible = true
-      heart2.isVisible = true
-      heart3.isVisible = false
+    elseif (lives == 2) then
+      	heart1.isVisible = true
+      	heart2.isVisible = true
+      	heart3.isVisible = false
 
-     elseif (lives == 1) then
-      heart1.isVisible = true
-      heart2.isVisible = false
-      heart3.isVisible = false
+    elseif (lives == 1) then
+      	heart1.isVisible = true
+     	heart2.isVisible = false
+      	heart3.isVisible = false
 
-     elseif (lives == 0) then
-      heart1.isVisible = false
-      heart2.isVisible = false
-      heart3.isVisible = false
-      gameover.isVisible = true
-      emoji.isVisible = true
-      numericField.isVisible = false
-      pointsTextObject.isVisible = false
-      questionObject.isVisible = false
-     end
+    elseif (lives == 0) then
+    	heart1.isVisible = false
+      	heart2.isVisible = false
+      	heart3.isVisible = false
+      	gameover.isVisible = true
+      	emoji.isVisible = true
+      	numericField.isVisible = false
+      	pointsTextObject.isVisible = false
+      	questionObject.isVisible = false
+      	creepySound.cancel = true
+    end
 end
 
 
@@ -153,6 +154,7 @@ local function AskQuestion()
 		questionObject.text = randomNumber2 .. " - " .. randomNumber2 .. " = "
 		correctAnswer = randomNumber2 - randomNumber1
 	else
+		--create questionin text object
 		questionObject.text = randomNumber1 .. " - " .. randomNumber2 .. " = "
 		correctAnswer = randomNumber1 - randomNumber2
 	end
@@ -164,11 +166,11 @@ local function AskQuestion()
 		questionObject.text = randomNumber1 .. " * " .. randomNumber2 .. " = "
 
 	elseif (randomOperator == 4) then
-	 	
 	 	temp = randomNumber4
 	 	randomNumber4 = correctAnswer
 	 	correctAnswer = temp
   		correctAnswer = randomNumber4 * randomNumber5
+
 		--create question in text object
 		questionObject.text = randomNumber1 .. " / " .. randomNumber2 .. " = "	
 
@@ -186,9 +188,8 @@ local function Updatepoints()
 		clockText.isvisible = true
 		timer.cancel(countDownTimer)
 		winner.isvisible = true 
-end 
-
-	
+		creepySound.cancel = true	
+	end
 end
 
 
@@ -229,7 +230,7 @@ local function NumericFieldListener( event )
 			incorrectObject.isVisible = true
 			secondsLeft = totalSeconds 
 			incorrectObject.text = "The correct answer is " .. correctAnswer
-			wrongSoundSoundSoundChannel = audio.play(wrongSoundSoundSound)
+			pipSoundSoundSoundChannel = audio.play(pipSoundSoundSound)
 			timer.performWithDelay(2000,HideCorrect)
 			lives = lives -1
 			UpdateHeart()			
@@ -319,3 +320,4 @@ pointsTextObject:setTextColor(240/255, 190/255, 25/255)
 -- call the function to as the Question
 AskQuestion()
 Starttimer()
+Updatepoints()
