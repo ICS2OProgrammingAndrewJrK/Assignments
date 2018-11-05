@@ -166,10 +166,10 @@ local function AskQuestion()
 		questionObject.text = randomNumber1 .. " * " .. randomNumber2 .. " = "
 
 	elseif (randomOperator == 4) then
+		correctAnswer = randomNumber4 * randomNumber5
 	 	temp = randomNumber4
 	 	randomNumber4 = correctAnswer
 	 	correctAnswer = temp
-  		correctAnswer = randomNumber4 * randomNumber5
 
 		--create question in text object
 		questionObject.text = randomNumber1 .. " / " .. randomNumber2 .. " = "	
@@ -188,7 +188,7 @@ local function Updatepoints()
 		clockText.isvisible = true
 		timer.cancel(countDownTimer)
 		winner.isvisible = true 
-		creepySound.cancel = true	
+		creepySound = false	
 	end
 end
 
@@ -221,10 +221,10 @@ local function NumericFieldListener( event )
 			timer.performWithDelay(2000,HideCorrect)
 			numberOfPoints = numberOfPoints + 1
 			event.target.text = ""
-			secondsLeft = totalSeconds 
+			secondsLeft = totalSeconds 	
+			Updatepoints()		
 			-- create increasing points in the text object
             pointsTextObject.text = "Points = ".. numberOfPoints
-            Updatepoints()
 		else 
 			correctObject.isVisible = false 
 			incorrectObject.isVisible = true
