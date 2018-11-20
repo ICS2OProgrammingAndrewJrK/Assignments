@@ -58,7 +58,6 @@ local function Movepizza(event)
     pizza.alpha = pizza.alpha - 0.0003
   
     -- change the transparency of the ship every time it moves so that it fades out
-   
 end
 
 -- MoveShip will be called over and over again
