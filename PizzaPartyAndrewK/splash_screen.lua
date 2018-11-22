@@ -1,20 +1,11 @@
 -----------------------------------------------------------------------------------------
 --
 -- splash_screen.lua
--- Created by: Anderw jr
--- Date: 2018-11-15
+-- Created by: Andrew Jr
+-- Date: 2018-11-22
 -- Description: This is the splash screen of the game. It displays the 
 -- company logo that...
 -----------------------------------------------------------------------------------------
-
-----------------------------------------------------------------------------------------
---SOUNDS 
------------------------------------------------------------------------------------------
-
-local goinghigherSound = audio.loadSound("Sound/goinghigher.mp3")--Setting a variable to an mp3 file
-local goinghigherChannel 
-local goinghigherSoundChannel = audio.play(goinghigherSound)
-
 
 -- Use Composer Library
 local composer = require( "composer" )
@@ -22,7 +13,18 @@ local composer = require( "composer" )
 -- Name the Scene
 sceneName = "splash_screen"
 
+-- hide the status dar 
+display.setStatusBar(display.HiddenStatusBar)
+
 -----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+--SOUNDS 
+-----------------------------------------------------------------------------------------
+
+local goinghigherSound = audio.loadSound("Sounds/goinghigher.mp3")--Setting a variable to an mp3 file
+local goinghigherChannel 
+local goinghigherSoundChannel = audio.play(goinghigherSound)
+
 
 -- Create Scene Object
 local scene = composer.newScene( sceneName )
@@ -32,18 +34,28 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
  
 -- The local variables for this scene
-local beetleship
-local scrollXSpeed = 8
-local scrollYSpeed = -3
-
+local AndrewLogo
+local scrollSpeed = 5
+local pizza
 --------------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 --------------------------------------------------------------------------------------------
 
--- The function that moves the beetleship across the screen
-local function moveBeetleship()
-    beetleship.x = beetleship.x + scrollXSpeed
-    beetleship.y = beetleship.y + scrollYSpeed
+-- Description:This function adds the scroll speed to the x-value of the ship
+local function MoveAndrewLogo(event) 
+    -- add the scroll speed to the x-value of the ship
+    AndrewLogo.x = AndrewLogo.x + scrollSpeed  
+    AndrewLogo.alpha = AndrewLogo.alpha - 0.003
+  
+    -- change the transparency of the ship every time it moves so that it fades out   
+end
+
+local function Movepizza(event) 
+    -- add the scroll speed to the x-value of the ship
+    pizza.x = pizza.x + scrollSpeed  
+    pizza.alpha = pizza.alpha - 0.003
+  
+    -- change the transparency of the ship every time it moves so that it fades out
 end
 
 -- The function that will go to the main menu 
@@ -62,17 +74,33 @@ function scene:create( event )
     local sceneGroup = self.view
 
     -- set the background to be black
-    display.setDefault("background", 0, 0, 0)
+    display.setDefault("background", 70/255, 54/255, 90/255)
 
-    -- Insert the beetleship image
-    beetleship = display.newImageRect("Images/beetleship.png", 200, 200)
+    -- Insert the AndrewLogo image
+    AndrewLogo = display.newImageRect("Images/AndrewLogo.png", 800, 800)
 
-    -- set the initial x and y position of the beetleship
-    beetleship.x = 100
-    beetleship.y = display.contentHeight/2
+    -- character image with width and height 
+    pizza = display.newImageRect("Images/pizza.png", 320, 320)
+
+    --set the initial x and y position of AndrewLogo
+    pizza.x = 500
+    pizza.y = 600
+
+    --set the initial x and y position of pizza
+    AndrewLogo.x = 0
+    AndrewLogo.y = display.contentHeight/3
+
+    --set the initial x and y position of AndrewLogo
+    AndrewLogo.x = 0
+    AndrewLogo.y = 400
+   
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( beetleship )
+    sceneGroup:insert( AndrewLogo )
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( pizza )
+
 
 end -- function scene:create( event )
 
@@ -96,11 +124,10 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
-        -- start the splash screen music
-        jungleSoundsChannel = audio.play(jungleSounds )
-
-        -- Call the moveBeetleship function as soon as we enter the frame.
-        Runtime:addEventListener("enterFrame", moveBeetleship)
+        -- MoveShip will be called over and over again
+        Runtime:addEventListener("enterFrame", MoveAndrewLogo) 
+        Runtime:addEventListener("enterFrame", Movepizza) 
+           
 
         -- Go to the main menu screen after the given time.
         timer.performWithDelay ( 3000, gotoMainMenu)          
@@ -124,17 +151,15 @@ function scene:hide( event )
     -- Insert code here to "pause" the scene.
     -- Example: stop timers, stop animation, stop audio, etc.
     if ( phase == "will" ) then  
+    ----------------------------------------------------------------------------
+    --called immediately 
+    elseif( phase == "did" )then
 
-    -----------------------------------------------------------------------------------------
-
-    -- Called immediately after scene goes off screen.
-    elseif ( phase == "did" ) then
-        
-        -- stop the jungle sounds channel for this screen
-        audio.stop(jungleSoundsChannel)
+        audio.stop()
     end
 
-end --function scene:hide( event )
+    -----------------------------------------------------------------------------------------
+end
 
 -----------------------------------------------------------------------------------------
 
