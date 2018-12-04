@@ -31,6 +31,10 @@ local scene = composer.newScene( sceneName )
 -- The local variables for this scene
 local bkg_image
 
+-- Creating Transitioning Function back to main menu
+local function BackTransition( )
+    composer.gotoScene( "main_menu", {effect = "zoomOutInFadeRotate", time = 500})
+end
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
@@ -57,6 +61,31 @@ function scene:create( event )
         -- Insert background image into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( bkg_image )    
 
+    -- Creating Back Button
+    backButton = widget.newButton( 
+    {
+        -- Setting Position
+        x = display.contentWidth*1/8,
+        y = display.contentHeight*15/16,
+
+        -- Setting Dimensions
+        -- width = 1000,
+        -- height = 106,
+
+        -- Setting Visual Properties
+        defaultFile = "Images/Back Button Unpressed.png",
+        overFile = "Images/Back Button Pressed.png",
+
+        -- Setting Functional Properties
+        onRelease = BackTransition
+
+    } )
+
+    -----------------------------------------------------------------------------------------
+
+    -- Associating Buttons with this scene
+    sceneGroup:insert( backButton )
+    
 end --function scene:create( event )
 
 -----------------------------------------------------------------------------------------
